@@ -1,51 +1,160 @@
 # CLAUDE.md
 
-Guidelines for AI assistants working on the **oar-viewer-poc** (Digital Twin Viewer) project.
+Guidelines for AI assistants working on the **OAR Digital Twin Viewer** (`oar-viewer-poc`).
 
-## Project Overview
+## Product Overview
 
-This is a proof-of-concept Digital Twin Viewer application. The project is in its early setup phase — no source code, package.json, or build configuration has been committed yet. Contributions should establish clean foundations for a modern web application.
+The OAR Digital Twin Viewer transforms traditional 2D closeout documentation into an interactive 3D experience connected to the BIM model stored in Autodesk Construction Cloud (ACC). This is an **operational tool, not a design tool** — built for plant engineers, operations leadership, and closeout reviewers who have zero BIM knowledge.
+
+The MVP proves that:
+1. 3D BIM data can be made operationally useful
+2. 2D closeout documents can directly control and navigate a 3D model
+3. Revit metadata can drive visualization logic
+4. The interface can be simplified enough for non-BIM users
 
 - **License:** MIT (Copyright 2025 rbriles90)
 - **Repository:** `rbriles90/oar-viewer-poc`
 
-## Repository Structure
+## Tech Stack
+
+| Layer | Technology | Notes |
+|-------|-----------|-------|
+| **3D Viewer** | Autodesk Platform Services (APS) Viewer | Embedded web viewer, read-only |
+| **Frontend** | Custom UI overlay on APS Viewer | HTML/CSS/JS or framework TBD |
+| **Backend** | Node.js | APS auth + static JSON serving |
+| **Build Tool** | Vite | Dev server and production builds |
+| **Language** | TypeScript | Strict mode |
+| **Metadata** | Static JSON files | Exported from Revit via CSV → JSON |
+| **Auth** | APS OAuth (Autodesk credentials) | Users authenticate with Autodesk accounts |
+
+## Architecture
+
+### Data Flow
+
+```
+Revit → CSV Export → JSON → Viewer Mapping → Visual Rule Engine
+```
+
+### Key Concepts
+
+- **UniqueId**: Revit's stable element identifier, exported with metadata
+- **dbId**: APS Viewer's internal element identifier, resolved at runtime
+- **UniqueId → dbId mapping**: The viewer resolves Revit UniqueIds to viewer dbIds to link metadata to 3D geometry
+- **Visual Rule Engine**: Applies coloring, isolation, and highlighting based on metadata categories
+
+### Metadata Schema (JSON)
+
+Each equipment element maps:
+```json
+{
+  "uniqueId": "revit-unique-id",
+  "equipmentTag": "CON-00182",
+  "category": "motor | conveyor | optic",
+  "panel": "MCP-01 | MCC-02",
+  "supplier": "Stadler | Van Dyk",
+  "buildingFlag": true,
+  "relationships": {
+    "feedsTo": "optional-unique-id",
+    "controlledBy": "optional-unique-id"
+  }
+}
+```
+
+## MVP Feature Set
+
+### A. Model Loading & Authentication
+- APS OAuth login with Autodesk credentials
+- Load coordination model or selected RVT models from ACC
+- Single project at a time, read-only — no editing
+
+### B. Default Scene Configuration
+- Building geometry **hidden** by default
+- Equipment **visible** by default
+- "Show Building" toggle button
+- Purpose: reduce clutter, present system-level view immediately
+
+### C. Metadata Integration
+- Static JSON per project (no live updates, no write-back)
+- Viewer maps `uniqueId` → `dbId` at load time
+- Visualization rules applied based on metadata fields
+
+### D. Preset Search Modes
+Three pre-configured search types instead of free-text global search:
+
+| Search Mode | Search By | Behavior |
+|------------|-----------|----------|
+| **Conveyor Search** | Conveyor number | Auto-isolate + zoom |
+| **Motor Search** | Motor ID | Highlight + metadata display |
+| **Optic Search** | Optic number | Zoom + isolate |
+
+Selecting any item: zoom → isolate → highlight → show metadata panel.
+
+### E. Metadata Display Panel
+When an element is selected, display:
+- Equipment Tag
+- Type / Category
+- Panel (MCP/MCC)
+- Supplier
+- Related equipment
+- Optional LOTO reference
+
+### F. View Preset Buttons (Closeout Modes)
+
+**1. Lockout / Tagout (LOTO) Mode**
+- Color equipment by panel (MCP/MCC)
+- Highlight related motors and conveyors
+- Replicates lockout drawing in 3D
+
+**2. Supplier Identification Mode**
+- Color equipment by supplier (Stadler, Van Dyk, etc.)
+- Filter by supplier
+
+**3. MCC Panel Isolation**
+- Select MCC panel → highlight controlled equipment → hide unrelated
+
+### G. Process Flow Diagram (PFD) Navigation
+The most strategic MVP feature:
+- PFD displayed inside the viewer
+- Clicking a conveyor tag (e.g., `CON-00182`) on the PFD zooms to the corresponding 3D element
+- Users navigate via the diagram they already understand
+- Must be intuitive for non-technical users
+
+## Planned Project Structure
 
 ```
 oar-viewer-poc/
-├── .gitignore        # Comprehensive Node.js/web project ignore rules
-├── LICENSE           # MIT license
-├── README.md         # Project description ("Digital Twin Viewer")
-└── CLAUDE.md         # This file
+├── public/                  # Static assets (PFD images, icons)
+│   └── data/                # Static JSON metadata files per project
+├── src/
+│   ├── server/              # Node.js backend
+│   │   ├── auth/            # APS OAuth authentication
+│   │   └── routes/          # API routes (model URN, metadata serving)
+│   ├── client/              # Frontend application
+│   │   ├── viewer/          # APS Viewer initialization and extensions
+│   │   ├── ui/              # Custom overlay UI components
+│   │   │   ├── search/      # Preset search panels
+│   │   │   ├── metadata/    # Metadata display panel
+│   │   │   ├── presets/     # View preset buttons (LOTO, Supplier, MCC)
+│   │   │   └── pfd/         # Process Flow Diagram navigation
+│   │   ├── mapping/         # UniqueId → dbId resolution
+│   │   └── rules/           # Visual rule engine (coloring, isolation)
+│   └── shared/              # Shared types and constants
+├── .env.example             # Required environment variables template
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── CLAUDE.md
 ```
-
-The `.gitignore` is configured for a Node.js/TypeScript web project and includes patterns for:
-- Node modules and package manager artifacts (npm, yarn, pnpm)
-- Build outputs (`dist/`, `.next/`, `.nuxt/`, `.svelte-kit/`)
-- Vite build cache and logs
-- TypeScript build info (`*.tsbuildinfo`)
-- Environment files (`.env`, `.env.*`)
-- Test coverage (`coverage/`, `.nyc_output/`)
-- Linting caches (`.eslintcache`, `.stylelintcache`)
-
-## Tech Stack (Planned)
-
-Based on project configuration signals, the intended stack is:
-- **Runtime:** Node.js
-- **Language:** TypeScript (indicated by `.tsbuildinfo` in `.gitignore`)
-- **Build tool:** Vite (indicated by `vite.config.js/ts` patterns in `.gitignore`)
-- **Package manager:** npm, yarn, or pnpm (all supported by `.gitignore`)
-
-No framework has been selected yet. When scaffolding the project, choose tooling consistent with the `.gitignore` patterns already in place.
 
 ## Development Setup
 
-> **Note:** No `package.json` exists yet. The following will apply once the project is scaffolded.
-
-Expected workflow:
 ```bash
 # Install dependencies
-npm install        # or yarn / pnpm install
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Fill in APS_CLIENT_ID, APS_CLIENT_SECRET, APS_CALLBACK_URL
 
 # Start dev server
 npm run dev
@@ -56,50 +165,73 @@ npm run build
 # Run tests
 npm test
 
-# Lint code
+# Lint
 npm run lint
 ```
 
-## Conventions to Follow
+### Required Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `APS_CLIENT_ID` | Autodesk Platform Services client ID |
+| `APS_CLIENT_SECRET` | APS client secret |
+| `APS_CALLBACK_URL` | OAuth callback URL |
+
+## Conventions
 
 ### Code Style
-- Use TypeScript with strict mode enabled
+- TypeScript with strict mode
 - Prefer named exports over default exports
-- Use ESLint and Prettier for consistent formatting
-- Keep files focused and single-purpose
+- ESLint + Prettier for formatting
+- Files should be focused and single-purpose
 
-### Git Practices
-- Write clear, descriptive commit messages
-- Use conventional commit format when possible (`feat:`, `fix:`, `chore:`, `docs:`, etc.)
-- Keep commits atomic — one logical change per commit
+### Naming
+- Equipment metadata fields: `camelCase` (`equipmentTag`, `buildingFlag`)
+- Search modes and view presets: descriptive constants (`LOTO_MODE`, `SUPPLIER_MODE`, `MCC_ISOLATION`)
+- Viewer extension classes: `PascalCase` (e.g., `MetadataPanel`, `PfdNavigator`)
+
+### Git
+- Conventional commits: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`
+- Atomic commits — one logical change per commit
 
 ### Environment Variables
-- Store secrets and configuration in `.env` files (never commit these)
-- Provide a `.env.example` file documenting required variables (without actual values)
+- Never commit `.env` files
+- Document all required variables in `.env.example`
 
 ### Testing
-- Write tests alongside features
-- Place test files adjacent to source files or in a `__tests__/` directory
-- Target meaningful coverage — focus on logic and edge cases, not boilerplate
+- Test files adjacent to source or in `__tests__/` directories
+- Focus on logic: metadata mapping, visual rule engine, search filtering
+- Integration tests for APS Viewer interactions where feasible
 
-## Project Status
+## Explicitly Out of Scope (MVP)
 
-This repository is in initial setup. Key bootstrapping tasks include:
-1. Initialize `package.json` with project metadata and scripts
-2. Select and configure a frontend framework
-3. Set up TypeScript configuration (`tsconfig.json`)
-4. Configure Vite as the build tool
-5. Set up ESLint and Prettier
-6. Create initial application structure
-7. Add CI/CD pipeline (GitHub Actions)
+Do NOT implement or introduce:
+- Live IoT sensor feeds
+- Real-time mass balance updates
+- Gray Parrot integration
+- Autodesk Tandem integration
+- Model editing capabilities
+- Full digital twin analytics
+- AI/LLM assistant features
+- Free-text global search (use preset search modes only)
 
-## Key Decisions Still Pending
+These are roadmap items for future versions.
 
-When working on this project, be aware that these choices have not been finalized:
-- Frontend framework (React, Vue, Svelte, etc.)
-- State management approach
-- 3D rendering library for digital twin visualization (Three.js, Babylon.js, etc.)
-- API/backend architecture
-- Deployment target
+## Target Users
 
-Ask the project maintainer before making opinionated framework or architecture choices.
+Build for these people:
+1. **Operations leadership** — need overview, not detail
+2. **Optimization team** — need to trace equipment relationships
+3. **Plant engineers** — need to locate and understand equipment
+4. **Closeout reviewers** — need interactive replacements for static drawings
+
+NOT for: BIM managers, designers, or developers. Prioritize simplicity over power-user features.
+
+## MVP Success Criteria
+
+The MVP is successful when a user can:
+1. Load the model from ACC
+2. Click a conveyor on the PFD and instantly see it in 3D
+3. Toggle LOTO mode and understand panel relationships visually
+4. Search for a motor and locate it without confusion
+5. Navigate the entire interface without needing BIM knowledge
