@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" fill="none">
+  <rect width="1200" height="600" fill="#1a1d23"/>
+  <text x="600" y="30" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="18" font-weight="600">
+    Process Flow Diagram — OAR Sample Facility
+  </text>
+
+  <!-- Main conveyor line -->
+  <line x1="120" y1="300" x2="1080" y2="300" stroke="#333840" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- CON-00100 -->
+  <rect x="60" y="260" rx="4" width="120" height="60" fill="#22262e" stroke="#4a9eff" stroke-width="2"/>
+  <text x="120" y="285" text-anchor="middle" fill="#4a9eff" font-family="monospace" font-size="11">CON-00100</text>
+  <text x="120" y="305" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="10">Infeed Belt</text>
+
+  <!-- Arrow -->
+  <path d="M185 290 L240 290" stroke="#4a9eff" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- CON-00182 -->
+  <rect x="245" y="260" rx="4" width="120" height="60" fill="#22262e" stroke="#4a9eff" stroke-width="2"/>
+  <text x="305" y="285" text-anchor="middle" fill="#4a9eff" font-family="monospace" font-size="11">CON-00182</text>
+  <text x="305" y="305" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="10">Sort Belt A</text>
+
+  <!-- Arrow -->
+  <path d="M370 290 L425 290" stroke="#4a9eff" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- CON-00200 -->
+  <rect x="430" y="260" rx="4" width="120" height="60" fill="#22262e" stroke="#4a9eff" stroke-width="2"/>
+  <text x="490" y="285" text-anchor="middle" fill="#4a9eff" font-family="monospace" font-size="11">CON-00200</text>
+  <text x="490" y="305" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="10">Sort Belt B</text>
+
+  <!-- Arrow -->
+  <path d="M555 290 L610 290" stroke="#4a9eff" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- CON-00250 -->
+  <rect x="615" y="260" rx="4" width="120" height="60" fill="#22262e" stroke="#4a9eff" stroke-width="2"/>
+  <text x="675" y="285" text-anchor="middle" fill="#4a9eff" font-family="monospace" font-size="11">CON-00250</text>
+  <text x="675" y="305" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="10">Transfer Belt</text>
+
+  <!-- Arrow -->
+  <path d="M740 290 L795 290" stroke="#4a9eff" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- CON-00300 -->
+  <rect x="800" y="260" rx="4" width="120" height="60" fill="#22262e" stroke="#4a9eff" stroke-width="2"/>
+  <text x="860" y="285" text-anchor="middle" fill="#4a9eff" font-family="monospace" font-size="11">CON-00300</text>
+  <text x="860" y="305" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="10">Outfeed Belt</text>
+
+  <!-- Optics branch -->
+  <line x1="490" y1="260" x2="490" y2="170" stroke="#333840" stroke-width="2" stroke-dasharray="6,3"/>
+  <line x1="675" y1="260" x2="675" y2="170" stroke="#333840" stroke-width="2" stroke-dasharray="6,3"/>
+
+  <!-- OPT-00100 -->
+  <rect x="430" y="100" rx="4" width="120" height="55" fill="#22262e" stroke="#ffd54f" stroke-width="2"/>
+  <text x="490" y="123" text-anchor="middle" fill="#ffd54f" font-family="monospace" font-size="11">OPT-00100</text>
+  <text x="490" y="143" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="10">Optic Sorter A</text>
+
+  <!-- OPT-00200 -->
+  <rect x="615" y="100" rx="4" width="120" height="55" fill="#22262e" stroke="#ffd54f" stroke-width="2"/>
+  <text x="675" y="123" text-anchor="middle" fill="#ffd54f" font-family="monospace" font-size="11">OPT-00200</text>
+  <text x="675" y="143" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="10">Optic Sorter B</text>
+
+  <!-- Motors below conveyors -->
+  <text x="120" y="360" text-anchor="middle" fill="#8a90a0" font-family="monospace" font-size="9">MTR-00100</text>
+  <text x="305" y="360" text-anchor="middle" fill="#8a90a0" font-family="monospace" font-size="9">MTR-00182</text>
+  <text x="490" y="360" text-anchor="middle" fill="#8a90a0" font-family="monospace" font-size="9">MTR-00200</text>
+  <text x="675" y="360" text-anchor="middle" fill="#8a90a0" font-family="monospace" font-size="9">MTR-00250</text>
+  <text x="860" y="360" text-anchor="middle" fill="#8a90a0" font-family="monospace" font-size="9">MTR-00300</text>
+
+  <!-- Panel groups -->
+  <rect x="50" y="400" rx="4" width="340" height="40" fill="none" stroke="#ff5252" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="220" y="425" text-anchor="middle" fill="#ff5252" font-family="sans-serif" font-size="11">MCC-01 (Stadler)</text>
+
+  <rect x="420" y="400" rx="4" width="325" height="40" fill="none" stroke="#4caf50" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="582" y="425" text-anchor="middle" fill="#4caf50" font-family="sans-serif" font-size="11">MCC-02 (Van Dyk)</text>
+
+  <rect x="790" y="400" rx="4" width="140" height="40" fill="none" stroke="#ffd54f" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="860" y="425" text-anchor="middle" fill="#ffd54f" font-family="sans-serif" font-size="11">MCP-01</text>
+
+  <!-- Legend -->
+  <text x="600" y="520" text-anchor="middle" fill="#8a90a0" font-family="sans-serif" font-size="12">
+    Click any equipment tag to navigate to its 3D location
+  </text>
+
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4a9eff"/>
+    </marker>
+  </defs>
+</svg>
