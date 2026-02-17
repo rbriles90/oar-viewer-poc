@@ -1,0 +1,146 @@
+{
+  "projectName": "OAR Sample Facility",
+  "exportDate": "2025-01-15",
+  "equipment": [
+    {
+      "uniqueId": "e3a1b2c3-d4e5-6789-abcd-ef0123456789",
+      "equipmentTag": "CON-00100",
+      "category": "conveyor",
+      "panel": "MCC-01",
+      "supplier": "Stadler",
+      "buildingFlag": false,
+      "relationships": {
+        "feedsTo": "e3a1b2c3-d4e5-6789-abcd-ef0123456790"
+      }
+    },
+    {
+      "uniqueId": "e3a1b2c3-d4e5-6789-abcd-ef0123456790",
+      "equipmentTag": "CON-00182",
+      "category": "conveyor",
+      "panel": "MCC-01",
+      "supplier": "Stadler",
+      "buildingFlag": false,
+      "relationships": {
+        "feedsTo": "e3a1b2c3-d4e5-6789-abcd-ef0123456791"
+      }
+    },
+    {
+      "uniqueId": "e3a1b2c3-d4e5-6789-abcd-ef0123456791",
+      "equipmentTag": "CON-00200",
+      "category": "conveyor",
+      "panel": "MCC-02",
+      "supplier": "Van Dyk",
+      "buildingFlag": false
+    },
+    {
+      "uniqueId": "e3a1b2c3-d4e5-6789-abcd-ef0123456792",
+      "equipmentTag": "CON-00250",
+      "category": "conveyor",
+      "panel": "MCC-02",
+      "supplier": "Van Dyk",
+      "buildingFlag": false,
+      "relationships": {
+        "feedsTo": "e3a1b2c3-d4e5-6789-abcd-ef0123456793"
+      }
+    },
+    {
+      "uniqueId": "e3a1b2c3-d4e5-6789-abcd-ef0123456793",
+      "equipmentTag": "CON-00300",
+      "category": "conveyor",
+      "panel": "MCP-01",
+      "supplier": "Machinex",
+      "buildingFlag": false
+    },
+    {
+      "uniqueId": "f4b2c3d4-e5f6-7890-bcde-f01234567890",
+      "equipmentTag": "MTR-00100",
+      "category": "motor",
+      "panel": "MCC-01",
+      "supplier": "Stadler",
+      "buildingFlag": false,
+      "lotoReference": "LOTO-A-001",
+      "relationships": {
+        "controlledBy": "e3a1b2c3-d4e5-6789-abcd-ef0123456789"
+      }
+    },
+    {
+      "uniqueId": "f4b2c3d4-e5f6-7890-bcde-f01234567891",
+      "equipmentTag": "MTR-00182",
+      "category": "motor",
+      "panel": "MCC-01",
+      "supplier": "Stadler",
+      "buildingFlag": false,
+      "lotoReference": "LOTO-A-002",
+      "relationships": {
+        "controlledBy": "e3a1b2c3-d4e5-6789-abcd-ef0123456790"
+      }
+    },
+    {
+      "uniqueId": "f4b2c3d4-e5f6-7890-bcde-f01234567892",
+      "equipmentTag": "MTR-00200",
+      "category": "motor",
+      "panel": "MCC-02",
+      "supplier": "Van Dyk",
+      "buildingFlag": false,
+      "lotoReference": "LOTO-B-001"
+    },
+    {
+      "uniqueId": "f4b2c3d4-e5f6-7890-bcde-f01234567893",
+      "equipmentTag": "MTR-00250",
+      "category": "motor",
+      "panel": "MCC-02",
+      "supplier": "Van Dyk",
+      "buildingFlag": false,
+      "lotoReference": "LOTO-B-002"
+    },
+    {
+      "uniqueId": "f4b2c3d4-e5f6-7890-bcde-f01234567894",
+      "equipmentTag": "MTR-00300",
+      "category": "motor",
+      "panel": "MCP-01",
+      "supplier": "Machinex",
+      "buildingFlag": false,
+      "lotoReference": "LOTO-C-001"
+    },
+    {
+      "uniqueId": "a5c3d4e5-f6a7-8901-cdef-012345678901",
+      "equipmentTag": "OPT-00100",
+      "category": "optic",
+      "panel": "MCP-01",
+      "supplier": "NRT",
+      "buildingFlag": false
+    },
+    {
+      "uniqueId": "a5c3d4e5-f6a7-8901-cdef-012345678902",
+      "equipmentTag": "OPT-00200",
+      "category": "optic",
+      "panel": "MCP-01",
+      "supplier": "NRT",
+      "buildingFlag": false
+    },
+    {
+      "uniqueId": "b6d4e5f6-a7b8-9012-defa-123456789012",
+      "equipmentTag": "BLDG-WALLS",
+      "category": "conveyor",
+      "panel": "",
+      "supplier": "",
+      "buildingFlag": true
+    },
+    {
+      "uniqueId": "b6d4e5f6-a7b8-9012-defa-123456789013",
+      "equipmentTag": "BLDG-ROOF",
+      "category": "conveyor",
+      "panel": "",
+      "supplier": "",
+      "buildingFlag": true
+    },
+    {
+      "uniqueId": "b6d4e5f6-a7b8-9012-defa-123456789014",
+      "equipmentTag": "BLDG-FLOOR",
+      "category": "conveyor",
+      "panel": "",
+      "supplier": "",
+      "buildingFlag": true
+    }
+  ]
+}

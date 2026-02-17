@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OAR Digital Twin Viewer</title>
+
+  <!-- Autodesk Platform Services Viewer -->
+  <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" />
+  <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <div id="loading-status">Initializing...</div>
+  </div>
+
+  <!-- Application Shell -->
+  <div id="app">
+    <!-- Left Sidebar: Search -->
+    <div id="sidebar"></div>
+
+    <!-- Main Content Area -->
+    <div id="main-content">
+      <!-- Preset Toolbar -->
+      <div id="preset-toolbar"></div>
+
+      <!-- 3D Viewer -->
+      <div id="viewer-container">
+        <!-- Building Toggle -->
+        <button id="building-toggle">Show Building</button>
+
+        <!-- Metadata Panel (absolute positioned over viewer) -->
+        <div id="metadata-container"></div>
+
+        <!-- PFD Navigator (absolute positioned over viewer) -->
+        <div id="pfd-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/client/main.ts"></script>
+</body>
+</html>

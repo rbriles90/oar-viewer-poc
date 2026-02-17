@@ -1,0 +1,54 @@
+{
+  "imageUrl": "/data/pfd-placeholder.svg",
+  "hotspots": [
+    {
+      "tag": "CON-00100",
+      "x": 5,
+      "y": 45,
+      "width": 12,
+      "height": 8
+    },
+    {
+      "tag": "CON-00182",
+      "x": 22,
+      "y": 45,
+      "width": 12,
+      "height": 8
+    },
+    {
+      "tag": "CON-00200",
+      "x": 39,
+      "y": 45,
+      "width": 12,
+      "height": 8
+    },
+    {
+      "tag": "CON-00250",
+      "x": 56,
+      "y": 45,
+      "width": 12,
+      "height": 8
+    },
+    {
+      "tag": "CON-00300",
+      "x": 73,
+      "y": 45,
+      "width": 12,
+      "height": 8
+    },
+    {
+      "tag": "OPT-00100",
+      "x": 39,
+      "y": 18,
+      "width": 12,
+      "height": 8
+    },
+    {
+      "tag": "OPT-00200",
+      "x": 56,
+      "y": 18,
+      "width": 12,
+      "height": 8
+    }
+  ]
+}

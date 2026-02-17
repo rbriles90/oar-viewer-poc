@@ -1,0 +1,548 @@
+/* ==========================================================================
+   OAR Digital Twin Viewer — Core Styles
+   ========================================================================== */
+
+:root {
+  --oar-bg: #1a1d23;
+  --oar-surface: #22262e;
+  --oar-surface-hover: #2a2f38;
+  --oar-border: #333840;
+  --oar-text: #e0e4ea;
+  --oar-text-muted: #8a90a0;
+  --oar-primary: #4a9eff;
+  --oar-primary-hover: #6ab4ff;
+  --oar-accent: #ffd54f;
+  --oar-danger: #ff5252;
+  --oar-success: #4caf50;
+  --oar-radius: 6px;
+  --oar-sidebar-width: 320px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--oar-bg);
+  color: var(--oar-text);
+  overflow: hidden;
+}
+
+/* ---------- Layout ---------- */
+
+#app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+#sidebar {
+  width: var(--oar-sidebar-width);
+  background: var(--oar-surface);
+  border-right: 1px solid var(--oar-border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+#main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 0;
+}
+
+#preset-toolbar {
+  background: var(--oar-surface);
+  border-bottom: 1px solid var(--oar-border);
+  padding: 8px 16px;
+  z-index: 5;
+}
+
+#viewer-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+#metadata-container {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 300px;
+}
+
+#pfd-container {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 10;
+}
+
+/* ---------- Loading Overlay ---------- */
+
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--oar-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#loading-overlay .spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--oar-border);
+  border-top-color: var(--oar-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+#loading-status {
+  font-size: 14px;
+  color: var(--oar-text-muted);
+}
+
+#loading-status.error {
+  color: var(--oar-danger);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Building Toggle ---------- */
+
+#building-toggle {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  background: var(--oar-surface);
+  color: var(--oar-text);
+  border: 1px solid var(--oar-border);
+  padding: 8px 16px;
+  border-radius: var(--oar-radius);
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+#building-toggle:hover {
+  background: var(--oar-surface-hover);
+}
+
+#building-toggle.active {
+  border-color: var(--oar-primary);
+  color: var(--oar-primary);
+}
+
+/* ---------- Search Panel ---------- */
+
+.oar-search-panel {
+  padding: 16px;
+}
+
+.oar-search-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--oar-text);
+}
+
+.oar-search-modes {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.oar-mode-btn {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid var(--oar-border);
+  background: transparent;
+  color: var(--oar-text-muted);
+  border-radius: var(--oar-radius);
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.15s;
+}
+
+.oar-mode-btn:hover {
+  background: var(--oar-surface-hover);
+  color: var(--oar-text);
+}
+
+.oar-mode-btn.active {
+  background: var(--oar-primary);
+  color: #fff;
+  border-color: var(--oar-primary);
+}
+
+.oar-search-input-wrap {
+  margin-bottom: 12px;
+}
+
+.oar-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--oar-border);
+  background: var(--oar-bg);
+  color: var(--oar-text);
+  border-radius: var(--oar-radius);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.oar-search-input:focus {
+  border-color: var(--oar-primary);
+}
+
+.oar-search-input::placeholder {
+  color: var(--oar-text-muted);
+}
+
+.oar-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: calc(100vh - 240px);
+  overflow-y: auto;
+}
+
+.oar-search-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--oar-text);
+  cursor: pointer;
+  border-radius: var(--oar-radius);
+  font-size: 13px;
+  text-align: left;
+  width: 100%;
+  transition: background 0.15s;
+}
+
+.oar-search-result:hover {
+  background: var(--oar-surface-hover);
+}
+
+.oar-result-tag {
+  font-weight: 500;
+}
+
+.oar-result-meta {
+  font-size: 11px;
+  color: var(--oar-text-muted);
+}
+
+.oar-no-results {
+  padding: 16px;
+  text-align: center;
+  color: var(--oar-text-muted);
+  font-size: 13px;
+}
+
+/* ---------- Metadata Panel ---------- */
+
+.oar-metadata-panel {
+  background: var(--oar-surface);
+  border: 1px solid var(--oar-border);
+  border-radius: var(--oar-radius);
+  overflow: hidden;
+  display: none;
+}
+
+.oar-metadata-panel.visible {
+  display: block;
+}
+
+.oar-metadata-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--oar-border);
+}
+
+.oar-metadata-header h3 {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.oar-metadata-close {
+  background: none;
+  border: none;
+  color: var(--oar-text-muted);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.oar-metadata-close:hover {
+  color: var(--oar-text);
+}
+
+.oar-metadata-content {
+  padding: 12px 16px;
+}
+
+.oar-metadata-empty {
+  color: var(--oar-text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.oar-meta-field {
+  margin-bottom: 10px;
+}
+
+.oar-meta-field label {
+  display: block;
+  font-size: 11px;
+  color: var(--oar-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.oar-meta-value {
+  font-size: 14px;
+  color: var(--oar-text);
+}
+
+.oar-meta-tag {
+  font-weight: 600;
+  color: var(--oar-accent);
+}
+
+.oar-meta-link {
+  background: none;
+  border: none;
+  color: var(--oar-primary);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.oar-meta-link:hover {
+  color: var(--oar-primary-hover);
+}
+
+/* ---------- Preset Toolbar ---------- */
+
+.oar-preset-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.oar-preset-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.oar-preset-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--oar-border);
+  background: transparent;
+  color: var(--oar-text);
+  border-radius: var(--oar-radius);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.oar-preset-btn:hover {
+  background: var(--oar-surface-hover);
+}
+
+.oar-preset-btn.active {
+  border-color: var(--oar-primary);
+  background: rgba(74, 158, 255, 0.1);
+  color: var(--oar-primary);
+}
+
+.oar-preset-icon {
+  font-size: 14px;
+}
+
+.oar-reset-btn {
+  border-color: transparent;
+  color: var(--oar-text-muted);
+}
+
+.oar-reset-btn:hover {
+  color: var(--oar-text);
+}
+
+.oar-preset-filter {
+  padding: 5px 8px;
+  border: 1px solid var(--oar-border);
+  background: var(--oar-bg);
+  color: var(--oar-text);
+  border-radius: var(--oar-radius);
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* ---------- PFD Navigator ---------- */
+
+.oar-pfd-navigator {
+  position: relative;
+}
+
+.oar-pfd-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid var(--oar-border);
+  background: var(--oar-surface);
+  color: var(--oar-text);
+  border-radius: var(--oar-radius);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s;
+}
+
+.oar-pfd-toggle:hover {
+  background: var(--oar-surface-hover);
+}
+
+.oar-pfd-toggle.active {
+  border-color: var(--oar-primary);
+  color: var(--oar-primary);
+}
+
+.oar-pfd-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 40px;
+}
+
+.oar-pfd-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 16px;
+}
+
+.oar-pfd-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.oar-pfd-close {
+  background: none;
+  border: none;
+  color: var(--oar-text-muted);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.oar-pfd-close:hover {
+  color: var(--oar-text);
+}
+
+.oar-pfd-content {
+  max-width: 1200px;
+  max-height: calc(100vh - 160px);
+  overflow: auto;
+  background: var(--oar-surface);
+  border: 1px solid var(--oar-border);
+  border-radius: var(--oar-radius);
+}
+
+.oar-pfd-image-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.oar-pfd-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.oar-pfd-hotspots {
+  position: absolute;
+  inset: 0;
+}
+
+.oar-pfd-hotspot {
+  position: absolute;
+  background: rgba(74, 158, 255, 0.15);
+  border: 1px solid rgba(74, 158, 255, 0.4);
+  color: var(--oar-primary);
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 2px;
+}
+
+.oar-pfd-hotspot:hover {
+  background: rgba(74, 158, 255, 0.3);
+  border-color: var(--oar-primary);
+  transform: scale(1.05);
+}
+
+/* ---------- Scrollbar ---------- */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--oar-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--oar-text-muted);
+}
