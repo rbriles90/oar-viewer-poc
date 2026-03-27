@@ -29,8 +29,18 @@ export interface ProjectMetadata {
 /** Preset search mode types */
 export type SearchMode = "conveyor" | "motor" | "optic";
 
-/** View preset mode types */
-export type ViewPresetMode = "loto" | "supplier" | "mcc";
+/**
+ * View preset mode types.
+ * Safety modes (egress, travel, fire-extinguisher) hide all equipment
+ * and show only structural elements.
+ */
+export type ViewPresetMode =
+  | "loto"
+  | "supplier"
+  | "mcc"
+  | "egress"
+  | "travel"
+  | "fire-extinguisher";
 
 /** Resolved mapping from Revit UniqueId to APS Viewer dbId */
 export interface IdMapping {

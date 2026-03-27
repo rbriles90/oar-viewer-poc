@@ -30,6 +30,11 @@ export function applyViewPreset(
     case "mcc":
       applyMccIsolation(viewer, equipment, idMap, filterValue);
       break;
+    case "egress":
+    case "travel":
+    case "fire-extinguisher":
+      applySafetyMode(viewer, equipment, idMap);
+      break;
   }
 }
 
@@ -116,6 +121,33 @@ function applyMccIsolation(
   const color = new THREE.Vector4(r, g, b, 1);
   for (const dbId of dbIds) {
     viewer.setThemingColor(dbId, color);
+  }
+}
+
+/**
+ * Safety Mode: Hide all equipment, show only structural elements.
+ *
+ * Used for egress routes, travel paths, and fire extinguisher overlays.
+ * All items with buildingFlag=false (equipment) are hidden so the space
+ * reads clearly without machinery cluttering the view.
+ */
+function applySafetyMode(
+  viewer: Autodesk.Viewing.GuiViewer3D,
+  equipment: EquipmentMetadata[],
+  idMap: Map<string, number>,
+) {
+  // Start clean — show everything, drop any existing isolation
+  viewer.isolate([]);
+  viewer.showAll();
+
+  // Collect all equipment dbIds (non-building elements) and hide them
+  const equipmentDbIds = equipment
+    .filter((e) => !e.buildingFlag)
+    .map((e) => idMap.get(e.uniqueId))
+    .filter((id): id is number => id !== undefined);
+
+  if (equipmentDbIds.length > 0) {
+    viewer.hide(equipmentDbIds);
   }
 }
 

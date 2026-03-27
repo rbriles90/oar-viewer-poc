@@ -1,6 +1,6 @@
 /**
  * View Preset Toolbar.
- * Provides LOTO, Supplier, and MCC Panel view mode buttons.
+ * Provides LOTO, Supplier, MCC Panel, and Safety view mode buttons.
  */
 
 import type { EquipmentMetadata, ViewPresetMode } from "../../../shared/types.js";
@@ -70,6 +70,27 @@ export class PresetToolbar {
         </select>
       </div>
 
+      <div class="oar-preset-group oar-preset-group--safety">
+        <button class="oar-preset-btn" data-mode="egress" title="Egress routes — hides equipment, shows structure only">
+          <span class="oar-preset-icon">&#x1f6aa;</span>
+          Egress Routes
+        </button>
+      </div>
+
+      <div class="oar-preset-group oar-preset-group--safety">
+        <button class="oar-preset-btn" data-mode="travel" title="Travel paths — hides equipment, shows structure only">
+          <span class="oar-preset-icon">&#x1f9b5;</span>
+          Travel Paths
+        </button>
+      </div>
+
+      <div class="oar-preset-group oar-preset-group--safety">
+        <button class="oar-preset-btn" data-mode="fire-extinguisher" title="Fire extinguishers — hides equipment, shows structure only">
+          <span class="oar-preset-icon">&#x1f9ef;</span>
+          Fire Ext.
+        </button>
+      </div>
+
       <div class="oar-preset-group">
         <button class="oar-preset-btn oar-reset-btn" data-mode="reset" title="Reset to default view">
           <span class="oar-preset-icon">&#x21ba;</span>
@@ -116,7 +137,7 @@ export class PresetToolbar {
       btn.classList.toggle("active", btn.dataset.mode === mode);
     });
 
-    // Show/hide relevant filter dropdown
+    // Show/hide relevant filter dropdown (only supplier and mcc have them)
     this.el.querySelectorAll<HTMLSelectElement>(".oar-preset-filter").forEach((select) => {
       const visible = select.dataset.mode === mode && (mode === "supplier" || mode === "mcc");
       select.style.display = visible ? "block" : "none";
